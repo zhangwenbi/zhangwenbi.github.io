@@ -63,7 +63,9 @@
     <script src="/js/util.js"></script>
     <script src="/js/main.js"></script>
 	
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><script src="/js/prism.js"></script>
+<script src="/js/prism-line-numbers.min.js"></script></head>
     
 		
 <!-- Layouts -->
@@ -155,10 +157,14 @@
 <li>本地调试时需要科学上网（懂得都懂），否则接口可能会调用失败</li>
 <li>一台国外的服务器（部署时如果是国内的服务器则需要搭建代理，国外的服务器可直接使用，服务器节点最好在美国或者新加坡，如果只是本地调试，则无需准备）</li>
 </ul>
-<h2 id="maven依赖包"><a href="#maven依赖包" class="headerlink" title="maven依赖包"></a>maven依赖包</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;  </span><br><span class="line">    &lt;groupId&gt;com.theokanning.openai-gpt3-java&lt;/groupId&gt;  </span><br><span class="line">    &lt;artifactId&gt;service&lt;/artifactId&gt;  </span><br><span class="line">    &lt;version&gt;0.14.0&lt;/version&gt;  </span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="第一步：创建OpenAiService对象，使用该对象请求openAI服务"><a href="#第一步：创建OpenAiService对象，使用该对象请求openAI服务" class="headerlink" title="第一步：创建OpenAiService对象，使用该对象请求openAI服务"></a>第一步：创建OpenAiService对象，使用该对象请求openAI服务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenAiService openAiService = new OpenAiService(AIToken, Duration.ofMillis(100000));</span><br></pre></td></tr></table></figure>
-
+<h2 id="maven依赖包"><a href="#maven依赖包" class="headerlink" title="maven依赖包"></a>maven依赖包</h2><pre><code>&lt;dependency&gt;  
+    &lt;groupId&gt;com.theokanning.openai-gpt3-java&lt;/groupId&gt;  
+    &lt;artifactId&gt;service&lt;/artifactId&gt;  
+    &lt;version&gt;0.14.0&lt;/version&gt;  
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="第一步：创建OpenAiService对象，使用该对象请求openAI服务"><a href="#第一步：创建OpenAiService对象，使用该对象请求openAI服务" class="headerlink" title="第一步：创建OpenAiService对象，使用该对象请求openAI服务"></a>第一步：创建OpenAiService对象，使用该对象请求openAI服务</h3><pre><code>OpenAiService openAiService = new OpenAiService(AIToken, Duration.ofMillis(100000));
+</code></pre>
 <ul>
 <li>AIToken：上文所说的需要准备的openAI的token</li>
 <li>Duration.ofMillis(100000)：<ul>
@@ -168,10 +174,25 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">OpenAiService openAiService = new OpenAiService(AIToken);</span><br><span class="line"></span><br><span class="line">//源码：</span><br><span class="line">private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);</span><br><span class="line"></span><br><span class="line">public OpenAiService(final String token) &#123;  </span><br><span class="line">    this(token, DEFAULT_TIMEOUT);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>OpenAiService openAiService = new OpenAiService(AIToken);
 
-<h3 id="第二步：创建请求参数对象（官网地址）"><a href="#第二步：创建请求参数对象（官网地址）" class="headerlink" title="第二步：创建请求参数对象（官网地址）"></a>第二步：创建请求参数对象（<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/api-reference/completions">官网地址</a>）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String content = &quot;如何学习Java&quot;;</span><br><span class="line"></span><br><span class="line">CompletionRequest completionRequest = CompletionRequest.builder()  </span><br><span class="line">    .prompt(&quot;请回答或扩写[&quot; + content + &quot;]，输出语言与输入语言保持一致。输出格式：使用json源码格式输出，json格式为[自定义json格式]，保持层级&quot;)  </span><br><span class="line">    .model(&quot;text-davinci-003&quot;)  </span><br><span class="line">    .echo(false)  </span><br><span class="line">    .n(1)  </span><br><span class="line">    .maxTokens(2000)  </span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+//源码：
+private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
 
+public OpenAiService(final String token) &#123;  
+    this(token, DEFAULT_TIMEOUT);  
+&#125;
+</code></pre>
+<h3 id="第二步：创建请求参数对象（官网地址）"><a href="#第二步：创建请求参数对象（官网地址）" class="headerlink" title="第二步：创建请求参数对象（官网地址）"></a>第二步：创建请求参数对象（<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/api-reference/completions">官网地址</a>）</h3><pre><code>String content = &quot;如何学习Java&quot;;
+
+CompletionRequest completionRequest = CompletionRequest.builder()  
+    .prompt(&quot;请回答或扩写[&quot; + content + &quot;]，输出语言与输入语言保持一致。输出格式：使用json源码格式输出，json格式为[自定义json格式]，保持层级&quot;)  
+    .model(&quot;text-davinci-003&quot;)  
+    .echo(false)  
+    .n(1)  
+    .maxTokens(2000)  
+    .build();
+</code></pre>
 <ul>
 <li>prompt （必需，字符串或数组）：<ul>
 <li>源码解释：An optional prompt to complete from（翻译：用于完成的可选提示符）</li>
@@ -180,8 +201,11 @@
 </li>
 <li>model （必需，字符串）：<ul>
 <li>源码解释：The name of the model to use. Required if specifying a fine-tuned model or if using the new v1&#x2F;completions endpoint.</li>
-<li>该参数指需要使用的AI模型的名称，本文以<code>text-davinci-003</code>模型为例，各模型的介绍请自行查询（<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/models">官网地址</a>）。不同模型使用的API可能略有差异<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//该方法可获取所有可使用的AI模型</span><br><span class="line">List&lt;Model&gt; models = openAiService.listModels();</span><br></pre></td></tr></table></figure></li>
+<li>该参数指需要使用的AI模型的名称，本文以<code>text-davinci-003</code>模型为例，各模型的介绍请自行查询（<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/models">官网地址</a>）。不同模型使用的API可能略有差异</li>
 </ul>
+<pre><code>//该方法可获取所有可使用的AI模型
+List&lt;Model&gt; models = openAiService.listModels();
+</code></pre>
 </li>
 <li>echo（布尔值或null，可选，默认为false）：<ul>
 <li>源码解释：Echo back the prompt in addition to the completion（翻译：除了完成之外还回显提示）</li>
@@ -201,11 +225,29 @@
 </li>
 <li>更多参数请自行查阅<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/api-reference/completions/create">官网</a></li>
 </ul>
-<h3 id="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"><a href="#第三步：调用API，传入请求参数，等待AI生成结果，获取返回值" class="headerlink" title="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"></a>第三步：调用API，传入请求参数，等待AI生成结果，获取返回值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CompletionResult completion = openAiService.createCompletion(completionRequest);</span><br></pre></td></tr></table></figure>
-
+<h3 id="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"><a href="#第三步：调用API，传入请求参数，等待AI生成结果，获取返回值" class="headerlink" title="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"></a>第三步：调用API，传入请求参数，等待AI生成结果，获取返回值</h3><pre><code>CompletionResult completion = openAiService.createCompletion(completionRequest);
+</code></pre>
 <p>CompletionResult数据结构</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: &quot;cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7&quot;,</span><br><span class="line">  &quot;object&quot;: &quot;text_completion&quot;,</span><br><span class="line">  &quot;created&quot;: 1589478378,</span><br><span class="line">  &quot;model&quot;: &quot;gpt-3.5-turbo&quot;,</span><br><span class="line">  &quot;choices&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;text&quot;: &quot;\n\nThis is indeed a test&quot;,</span><br><span class="line">      &quot;index&quot;: 0,</span><br><span class="line">      &quot;logprobs&quot;: null,</span><br><span class="line">      &quot;finish_reason&quot;: &quot;length&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;usage&quot;: &#123;</span><br><span class="line">    &quot;prompt_tokens&quot;: 5,</span><br><span class="line">    &quot;completion_tokens&quot;: 7,</span><br><span class="line">    &quot;total_tokens&quot;: 12</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<pre><code>&#123;
+  &quot;id&quot;: &quot;cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7&quot;,
+  &quot;object&quot;: &quot;text_completion&quot;,
+  &quot;created&quot;: 1589478378,
+  &quot;model&quot;: &quot;gpt-3.5-turbo&quot;,
+  &quot;choices&quot;: [
+    &#123;
+      &quot;text&quot;: &quot;\n\nThis is indeed a test&quot;,
+      &quot;index&quot;: 0,
+      &quot;logprobs&quot;: null,
+      &quot;finish_reason&quot;: &quot;length&quot;
+    &#125;
+  ],
+  &quot;usage&quot;: &#123;
+    &quot;prompt_tokens&quot;: 5,
+    &quot;completion_tokens&quot;: 7,
+    &quot;total_tokens&quot;: 12
+  &#125;
+&#125;
+</code></pre>
 <ul>
 <li>id：<ul>
 <li>源码解释：A unique id assigned to this completion.（翻译：分配给此完成的唯一id。）</li>
