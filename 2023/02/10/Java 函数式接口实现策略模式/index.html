@@ -63,8 +63,7 @@
     <script src="/js/util.js"></script>
     <script src="/js/main.js"></script>
 	
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
     
 		
 <!-- Layouts -->
@@ -155,128 +154,13 @@
 <p>其实我们所不满的就是策略模式带来的缺点：1、策略类会增多 2、业务逻辑分散到各个实现类中，而且没有一个地方可以俯视整个业务逻辑</p>
 <p>针对传统策略模式的缺点，在这分享一个实现思路，这个思路已经帮我解决了多个复杂if else的业务场景，理解上比较容易，代码上需要用到Java8的特性——利用Map与函数式接口来实现。</p>
 <p>策略方法调用类，业务代码中注入此类调用doTask()方法，传入相关参数即可</p>
-<pre><code>package com.zwb.blog.admin.test;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">package com.zwb.blog.admin.test;</span><br><span class="line"></span><br><span class="line">import lombok.RequiredArgsConstructor;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import javax.annotation.PostConstruct;</span><br><span class="line">import javax.validation.constraints.NotNull;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.function.Function;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">@RequiredArgsConstructor</span><br><span class="line">@Slf4j</span><br><span class="line">public class TestLambdaContext &#123;</span><br><span class="line">    /**</span><br><span class="line">     * 封装策略方法 key：策略名称 value：对应策略方法</span><br><span class="line">     * Function&lt;泛型1,泛型2&gt; 泛型1：function.apply()方法的入参类型,同时也是策略方法的入参类型  </span><br><span class="line">     * 泛型2：function.apply()方法的返参类型，同时也是策略方法的返参类型</span><br><span class="line">     * 可根据不同业务场景使用不同的函数式接口 如 UnaryOperator Consumer Predicate等 </span><br><span class="line">     * 参考网址：https://www.runoob.com/java/java8-functional-interfaces.html</span><br><span class="line">     */</span><br><span class="line">    private static final Map&lt;String, Function&lt;Object, Object&gt;&gt; map = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 此处采用构造注入，可替换为其他注入方式</span><br><span class="line">     */</span><br><span class="line">    private final @NotNull TestLambdaStrategy testLambdaStrategy;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 初始化策略map对象</span><br><span class="line">     */</span><br><span class="line">    @PostConstruct</span><br><span class="line">    public void init() &#123;</span><br><span class="line">        map.put(&quot;策略名称一&quot;, testLambdaStrategy::testOne);</span><br><span class="line">        map.put(&quot;策略名称二&quot;, testLambdaStrategy::testTwo);</span><br><span class="line">        map.put(&quot;策略名称三&quot;, testLambdaStrategy::testThree);</span><br><span class="line">        map.put(&quot;策略名称四&quot;, testLambdaStrategy::testFour);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 根据入参key从map中获取不同的策略方法执行</span><br><span class="line">     *</span><br><span class="line">     * @param key   策略名称</span><br><span class="line">     * @param param 策略方法所需入参</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static Object doTask(String key, Object param) &#123;</span><br><span class="line">        //根据key从map中获取对应的策略方法</span><br><span class="line">        Function&lt;Object, Object&gt; function = map.get(key);</span><br><span class="line">        if (function != null) &#123;</span><br><span class="line">            //传入策略方法所需参数,执行对应的策略方法</span><br><span class="line">            return function.apply(param);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-@Component
-@RequiredArgsConstructor
-@Slf4j
-public class TestLambdaContext &#123;
-    /**
-     * 封装策略方法 key：策略名称 value：对应策略方法
-     * Function&lt;泛型1,泛型2&gt; 泛型1：function.apply()方法的入参类型,同时也是策略方法的入参类型  
-     * 泛型2：function.apply()方法的返参类型，同时也是策略方法的返参类型
-     * 可根据不同业务场景使用不同的函数式接口 如 UnaryOperator Consumer Predicate等 
-     * 参考网址：https://www.runoob.com/java/java8-functional-interfaces.html
-     */
-    private static final Map&lt;String, Function&lt;Object, Object&gt;&gt; map = new HashMap&lt;&gt;();
-
-    /**
-     * 此处采用构造注入，可替换为其他注入方式
-     */
-    private final @NotNull TestLambdaStrategy testLambdaStrategy;
-
-    /**
-     * 初始化策略map对象
-     */
-    @PostConstruct
-    public void init() &#123;
-        map.put(&quot;策略名称一&quot;, testLambdaStrategy::testOne);
-        map.put(&quot;策略名称二&quot;, testLambdaStrategy::testTwo);
-        map.put(&quot;策略名称三&quot;, testLambdaStrategy::testThree);
-        map.put(&quot;策略名称四&quot;, testLambdaStrategy::testFour);
-    &#125;
-
-    /**
-     * 根据入参key从map中获取不同的策略方法执行
-     *
-     * @param key   策略名称
-     * @param param 策略方法所需入参
-     * @return
-     */
-    public static Object doTask(String key, Object param) &#123;
-        //根据key从map中获取对应的策略方法
-        Function&lt;Object, Object&gt; function = map.get(key);
-        if (function != null) &#123;
-            //传入策略方法所需参数,执行对应的策略方法
-            return function.apply(param);
-        &#125;
-        return null;
-    &#125;
-
-&#125;
-</code></pre>
 <p>策略方法类，该类中一个方法对应一个策略</p>
-<pre><code>package com.zwb.blog.admin.test;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.zwb.blog.admin.test;</span><br><span class="line"></span><br><span class="line">import lombok.RequiredArgsConstructor;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">@RequiredArgsConstructor</span><br><span class="line">@Slf4j</span><br><span class="line">public class TestLambdaStrategy &#123;</span><br><span class="line"></span><br><span class="line">    public Object testOne(Object s) &#123;</span><br><span class="line">        //执行业务方法......</span><br><span class="line">        return &quot;策略模式1，接受参数为：&quot; + s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Object testTwo(Object s) &#123;</span><br><span class="line">        //执行业务方法......</span><br><span class="line">        return &quot;策略模式2，接受参数为：&quot; + s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Object testThree(Object s) &#123;</span><br><span class="line">        //执行业务方法......</span><br><span class="line">        return &quot;策略模式3，接受参数为：&quot; + s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Object testFour(Object s) &#123;</span><br><span class="line">        //执行业务方法......</span><br><span class="line">        return &quot;策略模式4，接受参数为：&quot; + s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-@Component
-@RequiredArgsConstructor
-@Slf4j
-public class TestLambdaStrategy &#123;
-
-    public Object testOne(Object s) &#123;
-        //执行业务方法......
-        return &quot;策略模式1，接受参数为：&quot; + s;
-    &#125;
-
-    public Object testTwo(Object s) &#123;
-        //执行业务方法......
-        return &quot;策略模式2，接受参数为：&quot; + s;
-    &#125;
-
-    public Object testThree(Object s) &#123;
-        //执行业务方法......
-        return &quot;策略模式3，接受参数为：&quot; + s;
-    &#125;
-
-    public Object testFour(Object s) &#123;
-        //执行业务方法......
-        return &quot;策略模式4，接受参数为：&quot; + s;
-    &#125;
-
-&#125;
-</code></pre>
 <p>模拟调用</p>
-<pre><code>package com.zwb.blog.admin.test;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping(&quot;/blogs/test&quot;)
-public class TestController &#123;
-
-    @GetMapping(&quot;/testMethod&quot;)
-    public void testMethod() &#123;
-        String doTask = (String) TestLambdaContext.doTask(&quot;策略名称一&quot;, &quot;123&quot;);
-        System.out.println(doTask);
-
-        doTask = (String) TestLambdaContext.doTask(&quot;策略名称二&quot;, &quot;456&quot;);
-        System.out.println(doTask);
-
-        doTask = (String) TestLambdaContext.doTask(&quot;策略名称三&quot;, &quot;789&quot;);
-        System.out.println(doTask);
-
-        doTask = (String) TestLambdaContext.doTask(&quot;策略名称四&quot;, &quot;10 11 12&quot;);
-        System.out.println(doTask);
-    &#125;
-
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.zwb.blog.admin.test;</span><br><span class="line"></span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/blogs/test&quot;)</span><br><span class="line">public class TestController &#123;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/testMethod&quot;)</span><br><span class="line">    public void testMethod() &#123;</span><br><span class="line">        String doTask = (String) TestLambdaContext.doTask(&quot;策略名称一&quot;, &quot;123&quot;);</span><br><span class="line">        System.out.println(doTask);</span><br><span class="line"></span><br><span class="line">        doTask = (String) TestLambdaContext.doTask(&quot;策略名称二&quot;, &quot;456&quot;);</span><br><span class="line">        System.out.println(doTask);</span><br><span class="line"></span><br><span class="line">        doTask = (String) TestLambdaContext.doTask(&quot;策略名称三&quot;, &quot;789&quot;);</span><br><span class="line">        System.out.println(doTask);</span><br><span class="line"></span><br><span class="line">        doTask = (String) TestLambdaContext.doTask(&quot;策略名称四&quot;, &quot;10 11 12&quot;);</span><br><span class="line">        System.out.println(doTask);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出结果<br><img src="https://zhangwenbi.github.io/img/blog-image/Javafunction.png" alt="输出结果"><br>原文链接🔗：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7198426159478374461">https://juejin.cn/post/7198426159478374461</a></p>
 
             </div>
