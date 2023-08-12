@@ -160,9 +160,9 @@
     &lt;groupId&gt;com.theokanning.openai-gpt3-java&lt;&#x2F;groupId&gt;  
     &lt;artifactId&gt;service&lt;&#x2F;artifactId&gt;  
     &lt;version&gt;0.14.0&lt;&#x2F;version&gt;  
-&lt;&#x2F;dependency&gt;</code></pre>
+&lt;&#x2F;dependency&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="第一步：创建OpenAiService对象，使用该对象请求openAI服务"><a href="#第一步：创建OpenAiService对象，使用该对象请求openAI服务" class="headerlink" title="第一步：创建OpenAiService对象，使用该对象请求openAI服务"></a>第一步：创建OpenAiService对象，使用该对象请求openAI服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">OpenAiService openAiSśrvice &#x3D; new OpenAiService(AIToken, Duration.ofMillis(100000));</code></pre>
+<h3 id="第一步：创建OpenAiService对象，使用该对象请求openAI服务"><a href="#第一步：创建OpenAiService对象，使用该对象请求openAI服务" class="headerlink" title="第一步：创建OpenAiService对象，使用该对象请求openAI服务"></a>第一步：创建OpenAiService对象，使用该对象请求openAI服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">OpenAiService openAiSśrvice &#x3D; new OpenAiService(AIToken, Duration.ofMillis(100000));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
 <li>AIToken：上文所说的需要准备的openAI的token</li>
@@ -180,7 +180,7 @@ private static final Duration DEFAULT_TIMEOUT &#x3D; Duration.ofSeconds(10);
 
 public OpenAiService(final String token) &#123;  
     this(token, DEFAULT_TIMEOUT);  
-&#125;</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="第二步：创建请求参数对象（官网地址）"><a href="#第二步：创建请求参数对象（官网地址）" class="headerlink" title="第二步：创建请求参数对象（官网地址）"></a>第二步：创建请求参数对象（<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/api-reference/completions">官网地址</a>）</h3><pre class="line-numbers language-none"><code class="language-none">String content &#x3D; &quot;如何学习Java&quot;;
 
@@ -190,7 +190,7 @@ CompletionRequest completionRequest &#x3D; CompletionRequest.builder()
     .echo(false)  
     .n(1)  
     .maxTokens(2000)  
-    .build();</code></pre>
+    .build();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>prompt （必需，字符串或数组）：<ul>
@@ -201,7 +201,7 @@ CompletionRequest completionRequest &#x3D; CompletionRequest.builder()
 <li>model （必需，字符串）：<ul>
 <li>源码解释：The name of the model to use. Required if specifying a fine-tuned model or if using the new v1&#x2F;completions endpoint.</li>
 <li>该参数指需要使用的AI模型的名称，本文以<code>text-davinci-003</code>模型为例，各模型的介绍请自行查询（<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/models">官网地址</a>）。不同模型使用的API可能略有差异<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F;该方法可获取所有可使用的AI模型
-List&lt;Model&gt; models &#x3D; openAiService.listModels();</code></pre></li>
+List&lt;Model&gt; models &#x3D; openAiService.listModels();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
 <li>echo（布尔值或null，可选，默认为false）：<ul>
@@ -222,7 +222,7 @@ List&lt;Model&gt; models &#x3D; openAiService.listModels();</code></pre></li>
 </li>
 <li>更多参数请自行查阅<a target="_blank" rel="noopener" href="https://platform.openai.com/docs/api-reference/completions/create">官网</a></li>
 </ul>
-<h3 id="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"><a href="#第三步：调用API，传入请求参数，等待AI生成结果，获取返回值" class="headerlink" title="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"></a>第三步：调用API，传入请求参数，等待AI生成结果，获取返回值</h3><pre class="line-numbers language-none"><code class="language-none">CompletionResult completion &#x3D; openAiService.createCompletion(completionRequest);</code></pre>
+<h3 id="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"><a href="#第三步：调用API，传入请求参数，等待AI生成结果，获取返回值" class="headerlink" title="第三步：调用API，传入请求参数，等待AI生成结果，获取返回值"></a>第三步：调用API，传入请求参数，等待AI生成结果，获取返回值</h3><pre class="line-numbers language-none"><code class="language-none">CompletionResult completion &#x3D; openAiService.createCompletion(completionRequest);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>CompletionResult数据结构</p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;
@@ -244,7 +244,7 @@ List&lt;Model&gt; models &#x3D; openAiService.listModels();</code></pre></li>
     &quot;total_tokens&quot;: 12
   &#125;
 &#125;
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>id：<ul>
