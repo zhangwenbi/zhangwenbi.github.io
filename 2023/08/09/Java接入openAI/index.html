@@ -156,13 +156,13 @@
 <li>本地调试时需要科学上网（懂得都懂），否则接口可能会调用失败</li>
 <li>一台国外的服务器（部署时如果是国内的服务器则需要搭建代理，国外的服务器可直接使用，服务器节点最好在美国或者新加坡，如果只是本地调试，则无需准备）</li>
 </ul>
-<h2 id="maven依赖包"><a href="#maven依赖包" class="headerlink" title="maven依赖包"></a>maven依赖包</h2><pre class="line-numbers language-none"><code class="language-none">&lt;dependency&gt;  
+<h2 id="maven依赖包"><a href="#maven依赖包" class="headerlink" title="maven依赖包"></a>maven依赖包</h2><pre class="line-numbers language-maven" data-language="maven"><code class="language-maven">&lt;dependency&gt;  
     &lt;groupId&gt;com.theokanning.openai-gpt3-java&lt;&#x2F;groupId&gt;  
     &lt;artifactId&gt;service&lt;&#x2F;artifactId&gt;  
     &lt;version&gt;0.14.0&lt;&#x2F;version&gt;  
 &lt;&#x2F;dependency&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="第一步：创建OpenAiService对象，使用该对象请求openAI服务"><a href="#第一步：创建OpenAiService对象，使用该对象请求openAI服务" class="headerlink" title="第一步：创建OpenAiService对象，使用该对象请求openAI服务"></a>第一步：创建OpenAiService对象，使用该对象请求openAI服务</h3><pre class="line-numbers language-none"><code class="language-none">OpenAiService openAiSśrvice &#x3D; new OpenAiService(AIToken, Duration.ofMillis(100000));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="第一步：创建OpenAiService对象，使用该对象请求openAI服务"><a href="#第一步：创建OpenAiService对象，使用该对象请求openAI服务" class="headerlink" title="第一步：创建OpenAiService对象，使用该对象请求openAI服务"></a>第一步：创建OpenAiService对象，使用该对象请求openAI服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">OpenAiService openAiSśrvice &#x3D; new OpenAiService(AIToken, Duration.ofMillis(100000));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
 <li>AIToken：上文所说的需要准备的openAI的token</li>
