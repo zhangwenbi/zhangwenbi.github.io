@@ -134,7 +134,7 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://zhangwenbi.github.io/img/blog-image/MySQL.png);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
                 <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >mysql分页，偏移量越大，性能越差，如何优化？</h2></a>
             </div>
             <!-- Post -->
@@ -155,7 +155,7 @@
 经过测试发现，每次循环执行的sql都基本一致，变动的只有limit的偏移量，偏移量会随着循环次数越多而越来越大。<br/>
     
 <p>使用”EXPLAIN”关键字对sql进行分析，发现当limit的偏移量越来越大时，“rows”也越来越大，而这个”rows“代表的是mysql预估的执行这条sql所需要扫描或返回的记录条数，当“rows”的值越大，代表这条sql所需要读取的记录数越多，也就代表着执行耗时会越来越长，性能越来越差。<br/></p>
-<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2933dda705d04aaf9c2bd268c62a35ec~tplv-k3u1fbpfcp-watermark.image" alt="image.png">    </p>
+<p><img src="https://zhangwenbi.github.io/img/blog-image/mysql-limit-explain-1.webp" alt="image.png">    </p>
 <p/>
 
 <p>那这里为什么rows的值会越来越大呢？</p>
@@ -166,11 +166,11 @@
 <pre class="line-numbers language-none"><code class="language-none">select * from 表名 where id &gt; 上一次查询id最大值(第一次可设置为0) and ... order by id desc limit 记录数;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这里的核心点就是要根据id进行排序，配合业务代码，记录前一次查询取结果集的id最大值，用前一次查询结果集的id最大值替换后一次查询的where id条件值，主动过滤掉不需要的记录，以此来减少sql执行时所需要扫描的记录数，达到优化的效果。</p>
-<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46f6c22db2ee4bbda714963a63f5b66c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
-<p>这样做虽然“rows”的基础数增加了，但是随着id值越来越大，跳过的数据越来越多，“rows”的值却并不会产生变化，以此来稳定这条sql的性能。</p>
+<p><img src="https://zhangwenbi.github.io/img/blog-image/mysql-limit-explain-2.webp" alt="image.png"><br>这样做虽然“rows”的基础数增加了，但是随着id值越来越大，跳过的数据越来越多，“rows”的值却并不会产生变化，以此来稳定这条sql的性能。</p>
 <p>原理也非常简单，当 limit n 时，读取的记录行数都是固定的，而对比上面的limit m,n，此时需要抛弃的前m条记录已经被where条件筛选出去了，每次都只需要读n条记录，所以”rows”的值是固定的，并不会产生变化。</p>
 <p>上面优化后的sql中，order by 的字段是主键id-聚簇索引，但博主经过大量测试发现，如果order by 一个非聚簇索引字段，性能比order by 一个聚簇索引字段性能会更好，但具体原理还没搞清楚，同学们斟酌使用。</p>
 <p>最后再给同学们一点建议，像这种刷数据的业务逻辑最好是做成幂等的，也就是说不管业务逻辑执行多少遍，最后呈现的结果都是一致的，博主这里的业务逻辑就是幂等的，所以尽管第一次更新失败也没关系，调整好接口逻辑依然可以从头再刷一遍，并不会影响最后的结果。</p>
+<p>原文链接🔗：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7270800456862466087">https://juejin.cn/post/7270800456862466087</a></p>
 
             </div>
 
@@ -233,8 +233,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://example.com/2023/09/13/123/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://example.com/2023/09/13/123/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://example.com/2023/09/13/mysql%E5%88%86%E9%A1%B5%EF%BC%8C%E5%81%8F%E7%A7%BB%E9%87%8F%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%80%A7%E8%83%BD%E8%B6%8A%E5%B7%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2023/09/13/mysql%E5%88%86%E9%A1%B5%EF%BC%8C%E5%81%8F%E7%A7%BB%E9%87%8F%E8%B6%8A%E5%A4%A7%EF%BC%8C%E6%80%A7%E8%83%BD%E8%B6%8A%E5%B7%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
