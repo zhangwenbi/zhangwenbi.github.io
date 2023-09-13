@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="bookmark"  type="image/x-icon"  href="/img/logo_miccall.png"/>
+	<link rel="shortcut icon" href="/img/logo_miccall.png">
+	
+			    <title>
+    小友
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/mic_main.css" />
+    <link rel="stylesheet" href="/css/dropdownMenu.css" />
+    <meta name="keywords" content="miccall" />
+    
+    	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	 
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
+    <style type="text/css">
+        body:before {
+          content: ' ';
+          position: fixed;
+          top: 0;
+          background: url('/img/bg.jpg') center 0 no-repeat;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-size: cover; 
+        }
+    </style>
+
+			    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script async type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+    
+		
+<!-- Layouts -->
+
+
+
+<!--  代码渲染  -->
+<link rel="stylesheet" href="/css/prism_coy.css" />
+<link rel="stylesheet" href="/css/typo.css" />
+<!-- 文章页 -->
+<body class="is-loading">
+    <!-- Wrapper 外包 s-->
+    <div id="wrapper" class="fade-in">
+        <!-- Intro 头部显示 s -->
+        <!-- Intro 头部显示 e -->
+        <!-- Header 头部logo start -->
+        <header id="header">
+    <a href="/" class="logo">welcome</a>
+</header>
+        <!-- Nav 导航条 start -->
+        <nav id="nav" class="special" >
+            <ul class="menu links" >
+			<!-- Homepage  主页  --> 
+			<li >
+	            <a href="/" rel="nofollow">主页</a>
+	        </li>
+			<!-- categories_name  分类   --> 
+	        
+	        <li class="active">
+	            <a href="#s1">分类</a>
+	                    <ul class="submenu">
+	                        <li>
+	                        <a class="category-link" href="/categories/Java/">Java</a>
+	                    </ul>
+	        </li>
+	        
+	        <!-- archives  归档   --> 
+	        
+	        
+		        <!-- Pages 自定义   -->
+		        
+		        <li>
+		            <a href="/gallery/" title="图库">
+		                图库
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/tag/" title="标签">
+		                标签
+		            </a>
+		        </li>
+		        
+
+
+            </ul>
+            <!-- icons 图标   -->
+			<ul class="icons">
+                    
+                    <li>
+                        <a title="github" href="https://github.com" target="_blank" rel="noopener">
+                            <i class="icon fa fa-github"></i>
+                        </a>
+                    </li>
+                    
+			</ul>
+</nav>
+
+        <div id="main" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >mysql分页，偏移量越大，性能越差，如何优化？</h2></a>
+            </div>
+            <!-- Post -->
+            <div class="typo" style="padding: 3rem;">
+                <p>
+前不久博主做了一个新需求，需求上线之前需要刷一遍数据表中的数据，刷数据的业务逻辑也比较简单，就是简单的往一个json字段中再插入一个字段，但是呢，这张表中的数据量比较大，数据记录高达六千多万条。<p/>
+<p>
+其实像这种业务逻辑，博主以前也处理过，我们的做法一般都是分批查询表中的数据进行处理(至于为什么要分批处理，简单来说就是六千多万的数据基本不可能一次性查出来放到内存中，服务器会冒烟的~，所以一般都是一批一批的处理，整个处理方法也不能加事务，否则对数据库的压力依然是巨大的)，于是博主就写了个sql，使用limit分页分批次获取表中的数据进行处理。逻辑写完之后博主先是把测试库的数据刷了一遍(刷之前记得备份，业务逻辑执行错误的时候可以恢复数据库)，没啥毛病，执行效率也还行，然后博主就把代码提交了，等着上线前调下接口就好了
+<p/>
+
+<p>PS：博主当时的sql写法大概是这样的：</p>
+<pre class="line-numbers language-none"><code class="language-none">select * from 表名 [where条件] order by id desc limit 偏移量,记录数;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>~~</p>
+<p>
+到了上线的时候，调用接口，就开始看日志(这里因为业务处理的时间会很长，接口会响应超时，所以不需要看接口返回，直接看日志就好了)。刚开始一切正常，慢慢的就开始不对劲了，limit的记录数都是一样的，每次都是取一样多的记录，可执行效率却越来越慢了，到后面直接就查询超时，接口直接崩了。那为什么之前在测试数据库没有测出来呢，因为测试数据库的数据量只有几十万，跟正式数据库完全不是一个量级，而博主当时也没有意识到这个问题，所以这就导致了惨剧的发生。
+<p/>
+<p>
+经过测试发现，每次循环执行的sql都基本一致，变动的只有limit的偏移量，偏移量会随着循环次数越多而越来越大。<br/>
+    
+<p>使用”EXPLAIN”关键字对sql进行分析，发现当limit的偏移量越来越大时，“rows”也越来越大，而这个”rows“代表的是mysql预估的执行这条sql所需要扫描或返回的记录条数，当“rows”的值越大，代表这条sql所需要读取的记录数越多，也就代表着执行耗时会越来越长，性能越来越差。<br/></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2933dda705d04aaf9c2bd268c62a35ec~tplv-k3u1fbpfcp-watermark.image" alt="image.png">    </p>
+<p/>
+
+<p>那这里为什么rows的值会越来越大呢？</p>
+<p>其实这就跟limit的原理有关了，当&lt;limit m,n&gt;时，就是先读取前面m+n条记录，然后抛弃前m条，读后面n条想要的，所以m越大，偏移量越大，rows也就越来越大。</p>
+<p>那如果想解决这个问题的话，其实就是减少这条sql执行时所需要扫描的记录数。</p>
+<p>PS：以下都是基于sql使用到索引的情况下分析，如果sql未使用到索引，那不管怎么优化，都是走全表扫描，性能低下</p>
+<p>优化后的sql：</p>
+<pre class="line-numbers language-none"><code class="language-none">select * from 表名 where id &gt; 上一次查询id最大值(第一次可设置为0) and ... order by id desc limit 记录数;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这里的核心点就是要根据id进行排序，配合业务代码，记录前一次查询取结果集的id最大值，用前一次查询结果集的id最大值替换后一次查询的where id条件值，主动过滤掉不需要的记录，以此来减少sql执行时所需要扫描的记录数，达到优化的效果。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46f6c22db2ee4bbda714963a63f5b66c~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>这样做虽然“rows”的基础数增加了，但是随着id值越来越大，跳过的数据越来越多，“rows”的值却并不会产生变化，以此来稳定这条sql的性能。</p>
+<p>原理也非常简单，当 limit n 时，读取的记录行数都是固定的，而对比上面的limit m,n，此时需要抛弃的前m条记录已经被where条件筛选出去了，每次都只需要读n条记录，所以”rows”的值是固定的，并不会产生变化。</p>
+<p>上面优化后的sql中，order by 的字段是主键id-聚簇索引，但博主经过大量测试发现，如果order by 一个非聚簇索引字段，性能比order by 一个聚簇索引字段性能会更好，但具体原理还没搞清楚，同学们斟酌使用。</p>
+<p>最后再给同学们一点建议，像这种刷数据的业务逻辑最好是做成幂等的，也就是说不管业务逻辑执行多少遍，最后呈现的结果都是一致的，博主这里的业务逻辑就是幂等的，所以尽管第一次更新失败也没关系，调整好接口逻辑依然可以从头再刷一遍，并不会影响最后的结果。</p>
+
+            </div>
+
+            <!-- Post Comments -->
+            
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #7EC0EE;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load" id="disqus_bt"> 
+    <button class="disqus_click_btn">点击查看评论</button>
+</div>
+
+<!--
+<script type="text/javascript">
+$('.btn_click_load').click(function() {
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    document.getElementById('disqus_bt').style.display = "none";
+});
+</script>
+-->
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://example.com/2023/09/13/123/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2023/09/13/123/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/javascript">
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//http-miccall-tech.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+
+        </div>
+        <!-- Copyright 版权 start -->
+                <div id="copyright">
+            <ul>
+                <li>&copy;Powered By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
+                <li>Design: <a target="_blank" rel="noopener" href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
+            </ul>
+            
+                <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+			
+        </div>
+    </div>
+</body>
+
+
+
+ 	
+</html>
