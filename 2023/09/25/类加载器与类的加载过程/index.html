@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="bookmark"  type="image/x-icon"  href="/img/logo_miccall.png"/>
+	<link rel="shortcut icon" href="/img/logo_miccall.png">
+	
+			    <title>
+    小友
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/mic_main.css" />
+    <link rel="stylesheet" href="/css/dropdownMenu.css" />
+    <meta name="keywords" content="miccall" />
+    
+    	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	 
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
+    <style type="text/css">
+        body:before {
+          content: ' ';
+          position: fixed;
+          top: 0;
+          background: url('/img/bg.jpg') center 0 no-repeat;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-size: cover; 
+        }
+    </style>
+
+			    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script async type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+    
+		
+<!-- Layouts -->
+
+
+
+<!--  代码渲染  -->
+<link rel="stylesheet" href="/css/prism_coy.css" />
+<link rel="stylesheet" href="/css/typo.css" />
+<!-- 文章页 -->
+<body class="is-loading">
+    <!-- Wrapper 外包 s-->
+    <div id="wrapper" class="fade-in">
+        <!-- Intro 头部显示 s -->
+        <!-- Intro 头部显示 e -->
+        <!-- Header 头部logo start -->
+        <header id="header">
+    <a href="/" class="logo">welcome</a>
+</header>
+        <!-- Nav 导航条 start -->
+        <nav id="nav" class="special" >
+            <ul class="menu links" >
+			<!-- Homepage  主页  --> 
+			<li >
+	            <a href="/" rel="nofollow">主页</a>
+	        </li>
+			<!-- categories_name  分类   --> 
+	        
+	        <li class="active">
+	            <a href="#s1">分类</a>
+	                    <ul class="submenu">
+	                        <li>
+	                        <a class="category-link" href="/categories/Java/">Java</a>
+	                    </ul>
+	        </li>
+	        
+	        <!-- archives  归档   --> 
+	        
+	        
+		        <!-- Pages 自定义   -->
+		        
+		        <li>
+		            <a href="/gallery/" title="图库">
+		                图库
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/tag/" title="标签">
+		                标签
+		            </a>
+		        </li>
+		        
+
+
+            </ul>
+            <!-- icons 图标   -->
+			<ul class="icons">
+                    
+                    <li>
+                        <a title="github" href="https://github.com" target="_blank" rel="noopener">
+                            <i class="icon fa fa-github"></i>
+                        </a>
+                    </li>
+                    
+			</ul>
+</nav>
+
+        <div id="main" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://zhangwenbi.github.io/img/blog-image/jvm-overall-structure-drawing.jpeg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >类加载器与类的加载过程</h2></a>
+            </div>
+            <!-- Post -->
+            <div class="typo" style="padding: 3rem;">
+                <p>正文开始之前，先看一张图</p>
+<p><img src="https://zhangwenbi.github.io/img/blog-image/jvm-overall-structure-drawing.jpeg" alt="输出结果"></p>
+<p>java文件经过编译后生成class文件，再经由类装载器子系统将class文件加载到运行时数据区，最后由执行引擎解析指令并执行。</p>
+<h2 id="类加载器子系统"><a href="#类加载器子系统" class="headerlink" title="类加载器子系统"></a>类加载器子系统</h2><h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><ul>
+<li>类加载器子系统负责从文件系统或者网络中将Class文件加载到运行时数据区</li>
+<li>Class Loader只负责Class文件的加载，至于它是否可以运行，则由执行引擎决定</li>
+<li>加载的类信息（类的元信息，也称为DNA元数据模版，比如类所在的包、父类、实现的接口等）存放于一块称为方法区的内存空间</li>
+</ul>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><ol>
+<li>引导类加载器（启动类加载器）：用来加载Java的核心库，例如<code>java.lang</code>包中的类</li>
+<li>扩展类加载器：负责加载Java的扩展类库，位于<code>jre/lib/ext</code>目录下的JAR文件</li>
+<li>系统类加载器：该加载器是程序中默认的类加载器，所有自定义的类都是 由该类加载器加载</li>
+</ol>
+<p>除以上三个类加载器外，用户也可以自定义类加载器<br>实现步骤：</p>
+<ul>
+<li>继承抽象类<code>java.lang.ClassLoader</code></li>
+<li>在JDK1.2之前，总会去继承ClassLoader类并重写loadClass()方法，从而实现自定义的类加载器，但是在JDK1.2之后，官方已经不再建议用户去覆盖loadClass()方法，而是建议把自定义的类加载逻辑写在findClass()方法中</li>
+</ul>
+<p>PS：用户使用自定义的类加载器可以打破双亲委派机制</p>
+<h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><h4 id="工作原理："><a href="#工作原理：" class="headerlink" title="工作原理："></a>工作原理：</h4><ol>
+<li>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行；</li>
+<li>如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器；</li>
+<li>如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派机制</li>
+</ol>
+<p>简单理解就是一个类想要加载到内存中，会首先进到系统类加载器，系统类加载器并不会马上加载，而是向上委托到扩展类加载器，扩展类加载器同理也不会马上加载，而是向上委托到启动类加载器，此时已经到了最顶层，那从这里开始，启动类加载器就会开始加载。启动类加载器如果发现该类自己可以加载，那就执行加载操作，如果发现该类不归自己管，那就会一层层的向下递交，由扩展类加载器或系统类加载器尝试加载，直至成功将该类加载到内存中</p>
+<p>举个例子：当你现在有一个苹果，出于礼貌你需要先问问你的父亲吃不吃，你的父亲也要先问问你爷爷吃不吃，如果你爷爷吃，那这个苹果在你爷爷那里就已经被吃掉了，如果你爷爷不吃，那苹果就会到你父亲手上了，如果你父亲也不吃，那你才能吃这块苹果</p>
+<p>类加载器向上委派顺序：系统类加载器–&gt;扩展类加载器–&gt;引导类加载器</p>
+<h4 id="双亲委派机制的优势"><a href="#双亲委派机制的优势" class="headerlink" title="双亲委派机制的优势"></a>双亲委派机制的优势</h4><ul>
+<li>避免类的重复加载（当Java虚拟机中已经存在一个类的实例，并且试图再次加载同名的类时，会出现类重复加载的问题。这可能是由于不同的类加载器加载了同一个类导致的。）<ul>
+<li>当某一个类加载器加载到某个类后，其他类加载器就不会再次加载该类</li>
+</ul>
+</li>
+<li>保护程序安全，防止核心API被随意篡改<ul>
+<li>比如用户自定义一个<code>java.lang.String</code>，类加载时，会先由引导类加载器尝试加载，引导类加载器发现可以加载该类，那么就会以JDK所在目录作为根目录，从Java自己的核心库去加载，而不是加载用户自定义的String类</li>
+</ul>
+</li>
+</ul>
+<h2 id="类的加载过程"><a href="#类的加载过程" class="headerlink" title="类的加载过程"></a>类的加载过程</h2><p>Java类加载过程包括三个主要阶段：加载（Loading）、链接（Linking）和初始化（Initialization）。</p>
+<ul>
+<li>加载 loading<ul>
+<li>通过一个类的全限定类名获取定义此类的二进制字节流</li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构</li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口</li>
+</ul>
+</li>
+<li>链接 linking<ul>
+<li>验证 verify<ul>
+<li>验证class文件的字节流包含信息是否符合当前虚拟机要求，保证被加载类的正确性，不会危害虚拟机自身安全</li>
+<li>主要包括四种验证，文件格式验证、元数据验证、字节码验证、符号引用验证</li>
+</ul>
+</li>
+<li>准备 prepare<ul>
+<li>为类变量(被static修饰的变量)分配内存并且设置该类变量的默认初始值，即零值或null值</li>
+<li>如果是被final和static同时修饰，那这个变量就变成了一个常量，在此处会被显式初始化</li>
+<li>这里不会为实例变量分配初始化，类变量会分配在方法区中，而实例变量是会随着对象一起分配到Java堆中</li>
+</ul>
+</li>
+<li>解析 resolve<ul>
+<li>将符号引用转换为直接引用。符号引用是一种动态的引用，可以在运行时进行解析成直接引用。解析过程包括类或接口的解析、字段解析、方法解析等。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>初始化 initialization<ul>
+<li>初始化阶段就是执行类构造器方法&lt;clinit&gt;()的过程，这里的类构造器方法不是指类构造器</li>
+<li>此方法不需定义，是javac编译器自动收集类中的所有类变量的赋值动作和静态代码块中的语句合并而来</li>
+<li>构造器方法中指令按语句在源文件中出现的顺序执行</li>
+<li>若该类具有父类，JVM会保证子类的&lt;clinit&gt;()执行前，父类的&lt;clinit&gt;()已经执行完毕</li>
+<li>虚拟机必须要保证一个类的&lt;clinit&gt;()方法在多线程下被同步加锁</li>
+<li>这一步就是给所有静态变量赋值、执行类中的静态代码块</li>
+</ul>
+</li>
+</ul>
+<p>原文链接🔗：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7282605849700466728">https://juejin.cn/post/7282605849700466728</a></p>
+
+            </div>
+
+            <!-- Post Comments -->
+            
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #7EC0EE;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load" id="disqus_bt"> 
+    <button class="disqus_click_btn">点击查看评论</button>
+</div>
+
+<!--
+<script type="text/javascript">
+$('.btn_click_load').click(function() {
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    document.getElementById('disqus_bt').style.display = "none";
+});
+</script>
+-->
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://example.com/2023/09/25/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E4%B8%8E%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2023/09/25/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E4%B8%8E%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/javascript">
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//http-miccall-tech.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+
+        </div>
+        <!-- Copyright 版权 start -->
+                <div id="copyright">
+            <ul>
+                <li>&copy;Powered By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
+                <li>Design: <a target="_blank" rel="noopener" href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
+            </ul>
+            
+                <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+			
+        </div>
+    </div>
+</body>
+
+
+
+ 	
+</html>
