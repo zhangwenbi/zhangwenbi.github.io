@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="bookmark"  type="image/x-icon"  href="/img/logo_miccall.png"/>
+	<link rel="shortcut icon" href="/img/logo_miccall.png">
+	
+			    <title>
+    小友
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/mic_main.css" />
+    <link rel="stylesheet" href="/css/dropdownMenu.css" />
+    <meta name="keywords" content="miccall" />
+    
+    	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	 
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
+    <style type="text/css">
+        body:before {
+          content: ' ';
+          position: fixed;
+          top: 0;
+          background: url('/img/bg.jpg') center 0 no-repeat;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-size: cover; 
+        }
+    </style>
+
+			    
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script async type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+    
+		
+<!-- Layouts -->
+
+
+
+<!--  代码渲染  -->
+<link rel="stylesheet" href="/css/prism_coy.css" />
+<link rel="stylesheet" href="/css/typo.css" />
+<!-- 文章页 -->
+<body class="is-loading">
+    <!-- Wrapper 外包 s-->
+    <div id="wrapper" class="fade-in">
+        <!-- Intro 头部显示 s -->
+        <!-- Intro 头部显示 e -->
+        <!-- Header 头部logo start -->
+        <header id="header">
+    <a href="/" class="logo">welcome</a>
+</header>
+        <!-- Nav 导航条 start -->
+        <nav id="nav" class="special" >
+            <ul class="menu links" >
+			<!-- Homepage  主页  --> 
+			<li >
+	            <a href="/" rel="nofollow">主页</a>
+	        </li>
+			<!-- categories_name  分类   --> 
+	        
+	        <li class="active">
+	            <a href="#s1">分类</a>
+	                    <ul class="submenu">
+	                        <li>
+	                        <a class="category-link" href="/categories/Java/">Java</a></li><li><a class="category-link" href="/categories/Linux/">Linux</a>
+	                    </ul>
+	        </li>
+	        
+	        <!-- archives  归档   --> 
+	        
+	        
+		        <!-- Pages 自定义   -->
+		        
+		        <li>
+		            <a href="/gallery/" title="图库">
+		                图库
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/tag/" title="标签">
+		                标签
+		            </a>
+		        </li>
+		        
+
+
+            </ul>
+            <!-- icons 图标   -->
+			<ul class="icons">
+                    
+                    <li>
+                        <a title="github" href="https://github.com" target="_blank" rel="noopener">
+                            <i class="icon fa fa-github"></i>
+                        </a>
+                    </li>
+                    
+			</ul>
+</nav>
+
+        <div id="main" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://zhangwenbi.github.io/img/blog-image/docker.png);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >使用docker快速搭建测试环境</h2></a>
+            </div>
+            <!-- Post -->
+            <div class="typo" style="padding: 3rem;">
+                <h1 id="一、安装docker"><a href="#一、安装docker" class="headerlink" title="一、安装docker"></a>一、安装docker</h1><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/#install-using-the-repository">docker官网安装步骤</a></p>
+<p>已安装docker引擎的可跳过这一步</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 1、安装yum-utils软件包（提供yum-config-manager实用程序）并设置存储库
+sudo yum install -y yum-utils
+# 2、设置存储库,之后可以从存储库安装和更新Docker。（第一条指令是docker官方存储库，第二条指令是阿里云存储库，可根据需要自行选择）
+sudo yum-config-manager --add-repo https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;centos&#x2F;docker-ce.repo
+sudo yum-config-manager --add-repo https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;docker-ce&#x2F;linux&#x2F;centos&#x2F;docker-ce.repo
+
+# 3、下载docker引擎（该命令安装docker最新版，需要安装历史版本请参考官方网站）
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# 4、启动docker服务
+sudo systemctl start docker
+
+# 5、验证docker是否启动
+systemctl status docker
+
+# 6、查看docker版本
+docker -v<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="二、创建桥接网络"><a href="#二、创建桥接网络" class="headerlink" title="二、创建桥接网络"></a>二、创建桥接网络</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 创建桥接网络，用于后续docker容器间相互访问。
+# 桥接网络名称为 my-net，用户可自定义该名称，后续docker创建容器时需要用到该名称
+docker network create -d bridge my-net
+
+# 该命令现在不用执行，用于容器创建后查看容器ip，不同容器间可通过容器ip相互访问
+docker inspect 容器名称或容器id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="三、安装redis"><a href="#三、安装redis" class="headerlink" title="三、安装redis"></a>三、安装redis</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 拉取redis镜像，不加版本号默认拉取最新版本redis，也可根据需要修改redis版本
+docker pull redis:5.0.14
+
+# 查看redis镜像是否拉取成功
+docker images
+
+# 创建启动redis容器
+docker run --name redis -p 6379:6379 -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;redis:&#x2F;data -d --network my-net redis:5.0.14 redis-server --save 60 1 --loglevel warning --requirepass PASSWORD
+
+--name：指定容器名称
+-p：指定端口映射，格式为：主机(宿主)端口:容器端口
+-v： 数据卷挂载，即宿主机目录挂载到容器目录，宿主机若目录不存在会自动生成
+-d：后台运行容器，并返回容器ID（后面输入容器名称redis:5.0.14）
+-- network：使用第二步创建的桥接网络，用于容器间的相互访问
+
+redis-server（可根据自身需要新增或减少参数配置，也可以先创建完容器，再进入容器中设置以下参数）
+--save：持久化参数，redis-server --save 60 1 --&gt;在60秒之后，如果至少有1个key发生变化，则dump内存快照
+--loglevel：log 等级分为4 级，debug, verbose, notice, 和warning。生产环境下一般开启notice
+--requirepass：设置客户端连接后进行任何其他指定前需要使用的密码
+
+
+# 进入redis容器内部
+docker exec -it redis &#x2F;bin&#x2F;bash
+# 进入redis
+redis-cli
+# 简单验证密码，执行该命令后显示OK就没问题
+auth PASSWORD<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="四、安装mysql"><a href="#四、安装mysql" class="headerlink" title="四、安装mysql"></a>四、安装mysql</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 拉取镜像
+docker pull mysql:8.0.28
+# 查看镜像是否拉取成功
+docker images
+# 启动mysql容器
+docker run --name mysql --network my-net -p 3306:3306 -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;mysql:&#x2F;var&#x2F;lib&#x2F;mysql -e MYSQL_ROOT_PASSWORD&#x3D;PASSWORD -d mysql:8.0.28
+
+MYSQL_ROOT_PASSWORD：指定mysql的ROOT用户密码
+
+# 进入mysql容器
+docker exec -it mysql &#x2F;bin&#x2F;bash
+# 登录mysql
+mysql -uroot -p
+# 输入指定的ROOT用户密码
+
+登录成功即可<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="五、安装RocketMQ"><a href="#五、安装RocketMQ" class="headerlink" title="五、安装RocketMQ"></a>五、安装RocketMQ</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 拉取镜像
+docker pull apache&#x2F;rocketmq:4.9.3
+# 查看镜像是否拉取成功
+docker images
+
+# 启动NameServer容器
+docker run -d -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;rocketmq&#x2F;namesrv&#x2F;logs:&#x2F;home&#x2F;rocketmq&#x2F;logs --name rmqnamesrv --network my-net -p 9876:9876 apache&#x2F;rocketmq:4.9.3 sh mqnamesrv
+
+# 查看日志是否启动成功
+docker logs rmqnamesrv
+
+
+# 启动Broker容器
+docker run -d -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;rocketmq&#x2F;broker&#x2F;logs:&#x2F;home&#x2F;rocketmq-4.9.3&#x2F;logs -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;rocketmq&#x2F;broker&#x2F;store:&#x2F;home&#x2F;rocketmq-4.9.3&#x2F;store --name rmqbroker --network my-net --link rmqnamesrv:namesrv -e &quot;NAMESRV_ADDR&#x3D;namesrv:9876&quot; -p 10909:10909 -p 10911:10911 -p 10912:10912 apache&#x2F;rocketmq:4.9.3 sh mqbroker
+
+NAMESRV_ADDR：指定NameServer地址
+
+# 查看日志是否启动成功
+docker logs rmqbroker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="六、部署后端应用"><a href="#六、部署后端应用" class="headerlink" title="六、部署后端应用"></a>六、部署后端应用</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 使用 docker inspect 容器名称或容器id 命令查看mysql、redis、MQ等容器IP，将项目中的mysql、redis、MQ等链接地址的IP替换为容器IP，容器间即可相互访问
+
+# 使用maven-package指令将项目打成jar包
+将新jar包上传至 &#x2F;opt&#x2F;data&#x2F;docker&#x2F;app-biz 目录下
+
+# 运行业务容器，部分参数可根据服务器配置以及实际场景自行调整
+docker run -d -p 8080:8080 -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;app-biz:&#x2F;usr&#x2F;local&#x2F;app-biz -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;app-biz&#x2F;logs:&#x2F;home&#x2F;admin&#x2F;logs&#x2F; --name app-biz --network my-net openjdk:8 java -jar -Xms256m -Xmx512m -Xmn512m -XX:MetaspaceSize&#x3D;256m -XX:MaxMetaspaceSize&#x3D;512m -XX:SurvivorRatio&#x3D;8 -Xss512k -Dspring.profiles.active&#x3D;commerce-local -Dserver.port&#x3D;8080 &#x2F;usr&#x2F;local&#x2F;app-biz&#x2F;app-biz.jar
+
+# 查看日志，确认应用启动成功
+docker logs -f app-biz
+
+
+# 重新部署应用
+停止容器：docker stop app-biz
+删除容器：docker rm app-biz
+确认容器删除：docker ps -a（确认列表中没有app-biz）
+将新jar包上传至 &#x2F;opt&#x2F;data&#x2F;docker&#x2F;app-biz 目录下
+重新运行业务容器，查看日志，确认应用启动成功<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="七、安装Nginx"><a href="#七、安装Nginx" class="headerlink" title="七、安装Nginx"></a>七、安装Nginx</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 拉取nginx镜像
+docker pull nginx:1.21.6
+
+# 将Nginx 配置文件放到指定挂载目录  &#x2F;opt&#x2F;data&#x2F;docker&#x2F;nginx&#x2F;nginx.conf
+
+# 启动nginx容器
+docker run --name nginx --network my-net -p 80:80 -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;nginx&#x2F;html:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html:ro -v &#x2F;opt&#x2F;data&#x2F;docker&#x2F;nginx&#x2F;nginx.conf:&#x2F;etc&#x2F;nginx&#x2F;nginx.conf:ro -d nginx:1.21.6
+
+挂载数据卷 ro 模式：指定这个数据卷为只读。
+这会将主机上的目录挂载到容器内的目录,但容器内的数据卷只能读取,不能向其写入文件。 另外,ro 的反义词是 rw,表示读写(read-write)。rw是默认的访问模式,如果不指定就是读写,所以可以不用显式写出来。
+
+# 验证nginx是否启动成功
+curl localhost:80<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="八、部署前端应用"><a href="#八、部署前端应用" class="headerlink" title="八、部署前端应用"></a>八、部署前端应用</h1><p>前端工程师将项目打包，将压缩包上传到服务器，将压缩包解压到nginx容器挂载的html目录上（&#x2F;opt&#x2F;data&#x2F;docker&#x2F;nginx&#x2F;html）</p>
+<p>原文链接🔗：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7301150860825624630">https://juejin.cn/post/7301150860825624630</a></p>
+
+            </div>
+
+            <!-- Post Comments -->
+            
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #7EC0EE;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load" id="disqus_bt"> 
+    <button class="disqus_click_btn">点击查看评论</button>
+</div>
+
+<!--
+<script type="text/javascript">
+$('.btn_click_load').click(function() {
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    document.getElementById('disqus_bt').style.display = "none";
+});
+</script>
+-->
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://example.com/2023/11/14/%E4%BD%BF%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2023/11/14/%E4%BD%BF%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/javascript">
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//http-miccall-tech.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+
+        </div>
+        <!-- Copyright 版权 start -->
+                <div id="copyright">
+            <ul>
+                <li>&copy;Powered By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
+                <li>Design: <a target="_blank" rel="noopener" href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
+            </ul>
+            
+                <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+			
+        </div>
+    </div>
+</body>
+
+
+
+ 	
+</html>
